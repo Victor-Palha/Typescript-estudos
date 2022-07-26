@@ -1,6 +1,6 @@
 const firstname = "Victor"
 const anotherName = 1
-const x = true
+const boo = true
 
 function greeting(name: string){
     console.log(`Hello ${name}`)

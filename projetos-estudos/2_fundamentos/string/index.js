@@ -1,7 +1,8 @@
-var fullName;
-var firstName = 'Victor';
-var lastName = 'Palha';
+"use strict";
+let fullName;
+let firstName = 'Victor';
+let lastName = 'Palha';
 console.log(firstName.toLocaleLowerCase());
-fullName = "".concat(firstName, " ").concat(lastName);
+fullName = `${firstName} ${lastName}`;
 console.log(typeof (fullName));
 console.log(fullName);
