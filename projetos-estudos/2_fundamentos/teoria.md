@@ -1,10 +1,7 @@
-**O que são tipos?**
+# FUNDAMENTOS DO TYPESCRIPT
+***
 
-* Em TypeScript a principal função é *determinar tipos para os dados*;
-    * Variáveis, funções, retorno de função, tipos de objetos, etc...
-* Isso vai garantir a *qualidade do código*;
-
-**Tipos primiticos**
+**Tipos primitivos**
 
 * Há diversos tipos de TS, vamos começar pelos *primitivos*;
     * *number*, *string* e *boolean*
