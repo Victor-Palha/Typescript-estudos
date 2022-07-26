@@ -24,3 +24,8 @@
 * Mas para isso precisamos gerar o *arquivo de configuração*;
 * Para gerar o arquivo utilizamos o comando: `tsc --init`;
 * Apartir dele, podemos mudar várias opções em relação ao que o TS exevuta e também feito o compile.
+
+**Compilar TS automaticamente**
+
+* Para gerar a compilação automática podemos utilizar o comando: `tsc -w`;
+* O *nosso output será gerado automaticamente sempre que salvarmos* o projeto;
