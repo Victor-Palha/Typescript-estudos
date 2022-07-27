@@ -42,3 +42,63 @@
 * Podemos determinar tipos para objetos também;
 * A sintaxe é: `{atributo:tipo, atributo2:tipo2, atributo3:tipo3}`
 * Ou seja, estamos determinando quais tipos as *propriedades que um objeto possuem*;
+
+**Propriedades opcionais**
+
+* Nem sempre os objetos *(Ou qualquer dado que precise de parametro)* possuem todas as propriedades que poderiam possuir;
+* Por isso temos as *propriedades opcionais*;
+* Para ter esse resultado devemos colocar um interrogação: `{nome: string, sobrenome?: string}`.
+
+**Validação de propriedades opcionais**
+
+* Quando a propriedade é opcional, *precisamos criar uma validação*;
+* Isso acontece *por que o Typescript não nos ajuda mais*, já que ele deixa de controlar o valor que recebemos;
+* Para isto utilizamos uma *condicional if*, e conseguimos resolver a situação.
+
+**Union types**
+
+* O *Union type* é uma alternativa melhor do que o any;
+* Onde podemos *determinar dois tipos* para um dado;
+* A sintaxe: `tipo1 | tipo2`.
+    * Exemplo: `let nomeVariavel: number | string`.
+
+**Avançando com Union Types**
+
+* Podemos utilizar *condionais* para validação do tipo de union types;
+* Com isso é possível *trilhar rumos diferentes*, baseado no tipo de dado;
+* Para checar o tipo utilizamos `typeof`.
+
+**Type alias**
+
+* *Type alias* é um recurso que permite criar um tipo e determinar o que ele verifica;
+* Desta maneira *temos uma maneira mais fácil de chamá-lo* em vez de criar expressões complexas com Union types, por exemplo.
+    * Exemplo `type ID = string | number`
+
+**Introdução às interfaces**
+
+* Uma outra maneira de *nomear um tipo de objeto*;
+* Podemos *determinar um nome* para o tipo;
+* E também escolher *quais as propriedades e seus tipos*.
+
+**Diferença entre type alias e interfaces**
+
+* Na maioria das vezes *podemos optar entre qualquer um dos recursos*;
+* A única diferença é que *a interface pode ser alterada ao longo do código*, já o alias não;
+* Ou seja, se pretendemos mudar como o tipo de conforma, devemos escolher a interface.
+
+**Literal types**
+
+* *Literal types* é um recurso que permite colocar valores como tipos;
+* Isso restringe o uso a não só tipos, *como também os próprios valores*;
+* Este recurso é *muito utilizado com Union Types*.
+
+**Non-null Assertion Operator**
+
+* Às vezes o Typescript pode evidenciar um erro,*baseado em um valor que no momento do código ainda não está disponível*;
+* Porém se sabermos que este valor será preenchido, podemos evitar o erro;
+* Utilizamos o caractere `!`.
+
+**Symbol**
+
+* De forma resumida, o *Symbol* cria uma referência única para um valor;
+* Ou seja, mesmo que ele possua o mesmo valor de outra varável *teremos valores sendo considerados diferentes*. 
