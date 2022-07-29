@@ -83,7 +83,7 @@ class Dog{
         }
     }
 }
-
+/*
 const bela = new Dog("Bela", "Rottweiler")
 const aurora = new Dog("Aurora")
 
@@ -97,3 +97,30 @@ function showDog(dog: Dog){
 
 showDog(bela)
 showDog(aurora)
+
+/*Desafio 3 */
+
+class Review{
+    stars
+    constructor(stars?:number | boolean){
+        if(stars){
+            this.stars = stars
+        }else{
+            this.stars = false
+        }
+    }
+}
+
+function readReviw(user:Review){
+    if(user.stars == false){
+        console.log("Esperamos a sua avaliação assim que possível")
+    }else{
+        console.log(`Agradecemos sua avaliação de ${user.stars} Estrelas, comente o que você não gostou para nós melhoramos!`)
+    }
+}
+
+let usuario = new Review()
+let usuario2 = new Review(2)
+
+readReviw(usuario)
+readReviw(usuario2)
