@@ -16,17 +16,6 @@ function showUserDetails(user) {
         console.log(`A função do usuário é ${user.role}`);
     }
 }
-const user1 = {
-    email: "email.teste@teste.com",
-    role: "Admin"
-};
-const user2 = {
-    email: "teste@teste.com"
-};
-const fusca = {
-    brand: "WS",
-    wheels: 4
-};
 let coords = {
     x: 10
 };

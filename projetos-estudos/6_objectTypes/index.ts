@@ -32,7 +32,7 @@ function showUserDetails(user: User){
         console.log(`A função do usuário é ${user.role}`)
     }
 }
-
+/*
 const user1: User ={
     email: "email.teste@teste.com",
     role: "Admin"
@@ -48,11 +48,13 @@ interface Car {
     brand: string,
     readonly wheels: number
 }
-
+*/
+/*
 const fusca: Car = {
     brand: "WS",
     wheels: 4
 }
+*/
 //console.log(fusca)
 //ERRO
 //fusca.wheels = 5
