@@ -10,6 +10,7 @@ funções;
 *for executado*;
 * Para habilitar precisamos adicionar uma configuração no **tsconfig.json**;
     * `"experimentalDecorators": true`
+* Uma boa comparação de Decorators é com **Middlewares** que temos no Node.js
 
 **Primeiro decorator**
 * Vamos criar um decorator como uma *function*;
