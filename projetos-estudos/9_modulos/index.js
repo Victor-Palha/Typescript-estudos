@@ -43,9 +43,6 @@ const myVaribles = __importStar(require("./number"));
 console.log(myVaribles);
 myVaribles.funcTeste();
 class HumanBeing {
-    name;
-    age;
-    aliv;
     constructor(name, age, aliv) {
         this.name = name;
         this.age = age;

@@ -68,8 +68,6 @@ userGreeting(joao)
 */
 //4 - Operador in
 class Dog {
-    name;
-    breed;
     constructor(name, breed) {
         this.name = name;
         if (breed) {
@@ -94,7 +92,6 @@ showDog(aurora)
 
 /*Desafio 3 */
 class Review {
-    stars;
     constructor(stars) {
         if (stars) {
             this.stars = stars;

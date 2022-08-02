@@ -2,8 +2,6 @@
 // 1 - campos em classe
 //Iniciando classe sem valores pré-definidos
 class User {
-    name;
-    age;
 }
 const matheus = new User();
 matheus.name = "Matheus";
@@ -12,9 +10,6 @@ console.log(matheus);
 // 2 - Constructor
 // Iniciar um objeto com valores
 class NewUser {
-    //Innference
-    name;
-    age;
     constructor(name, age) {
         this.name = name;
         this.age = age;
@@ -25,9 +20,8 @@ console.log(Victor);
 // 3 - camp readOnly
 //Inicializando a classe com um valor readonly, ela não é possível de ser alterada
 class Car {
-    name;
-    wheels2 = 4;
     constructor(name) {
+        this.wheels2 = 4;
         this.name = name;
     }
 }
@@ -36,7 +30,6 @@ console.log(newCar);
 // 4 - Herança e Super
 //Classe Pai
 class Machine {
-    name;
     constructor(name) {
         this.name = name;
     }
@@ -45,7 +38,6 @@ class Machine {
 const trator = new Machine("trator");
 //Classe filha
 class KillerMachine extends Machine {
-    guns;
     constructor(name, guns) {
         //A função super é para enviar as propriedades que são do elemento pai
         super(name);
@@ -58,7 +50,6 @@ console.log(trator);
 console.log(destroyer);
 // 5 - Métodos
 class Elf {
-    name;
     constructor(name) {
         this.name = name;
     }
@@ -74,8 +65,6 @@ legolas.greeting();
 galadriel.greeting();
 // 6 - This
 class Dwarf {
-    name;
-    age;
     constructor(name, age) {
         this.name = name;
         this.age = age;
@@ -90,8 +79,6 @@ console.log(thorin.greeting());
 console.log(balin.greeting());
 // 7 - Getters
 class Person {
-    name;
-    surname;
     constructor(name, surname) {
         this.name = name;
         this.surname = surname;
@@ -106,8 +93,6 @@ const frodo = new Person("Frodo", "Baggins");
 console.log(frodo.fullname);
 // 8 - Setters
 class Coords {
-    x;
-    y;
     //Metodos setters
     set fillx(x) {
         if (x === 0 || typeof x != 'number') {
@@ -128,7 +113,6 @@ map.fillx = 15;
 map.filly = 30;
 console.log(map);
 class BlogPost {
-    title;
     constructor(title) {
         this.title = title;
     }
@@ -156,7 +140,9 @@ const object = new Nova();
 object.someMehod();
 // 11 - Visibilidades - public
 class Z {
-    x = 10;
+    constructor() {
+        this.x = 10;
+    }
 }
 class Y extends Z {
 }
@@ -164,7 +150,9 @@ const ZInstance = new Y;
 console.log(ZInstance.x);
 // 12 - Visibilidades - protected
 class E {
-    x = 15;
+    constructor() {
+        this.x = 15;
+    }
     protectedMethod() {
         console.log("Esse método é protegido!");
     }
@@ -183,7 +171,9 @@ fInstance.showProtectedMethod;
 // 13 - Visibilidades - private
 //Classe pai com os atributos privados e protegidos
 class PrivateClass {
-    name = "private";
+    constructor() {
+        this.name = "private";
+    }
     get showName() {
         return this.name;
     }
@@ -201,17 +191,15 @@ console.log(pObj.getName);
 //14 - Static members
 //a Palavra chave static dá acesso as propriedades da classe sem precisar instanciar objetos
 class StaticMembers {
-    static prop = "teste static";
     static staticMethod() {
         console.log("Este é um método estático!");
     }
 }
+StaticMembers.prop = "teste static";
 console.log(StaticMembers.prop);
 StaticMembers.staticMethod();
 // 15 - generic class
 class Item {
-    first;
-    second;
     constructor(first, second) {
         this.first = first;
         this.second = second;
@@ -221,9 +209,6 @@ const newItem = new Item("caixinha", false);
 console.log(newItem);
 //16 - Parameters properties
 class ParametersPropeties {
-    name;
-    qty;
-    price;
     constructor(name, qty, price) {
         this.name = name;
         this.qty = qty;
@@ -246,7 +231,6 @@ console.log(newShirt.showQty);
 console.log(newShirt.showPrice);
 //17- Class Expressions
 const myClass = class {
-    name;
     constructor(name) {
         this.name = name;
         this.name = name;
@@ -259,7 +243,6 @@ class AbstractClass {
 }
 //const newObj = new AbstractClass() | Não se pode instanciar uma classe abstrata
 class AbstractExemple extends AbstractClass {
-    name;
     constructor(name) {
         super();
         this.name = name;
@@ -273,10 +256,8 @@ const newAbstractObject = new AbstractExemple("Jhonny");
 newAbstractObject.showName();
 // 19 - Relações entre classes
 class Horse {
-    name;
 }
 class Cat {
-    name;
 }
 /*Na instancia do objeto a tipagem do objeto é dada por uma classe onde tem os EXATOS mesmos atributos da classe que está sendo instanciada, por isso não ocorre problema*/
 const vacalo = new Cat();
