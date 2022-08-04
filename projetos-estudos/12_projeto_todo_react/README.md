@@ -153,3 +153,172 @@ function App() {
 
 export default App;
 ```
+
+* Voltaremos para o arquivo `TaskForm.tsx` pra configurar a função `addTaskHandler` onde ela vai adiconar as tarefas dentro do nosso useState. Essa parte vai ficar um pouco mais complicada, então leia com atenção o passo a passo.
+
+    * Primeramente vamos adicionar mais uma `props` no nosso arquivo e adicionar no nosso componente.
+    ```ts
+    type Props = {
+        btnText:string
+        taskList: ITask[];
+        //Nova props
+        setTaskList?: React.Dispatch<React.SetStateAction<ITask[]>>
+    }
+    const TaskForm = ({btnText, taskList, setTaskList}: Props) => {
+        //Nossos useStates
+        const [id, setId] = useState<number>(0)
+        const [title, setTitle] = useState<string>('')
+        const [difficulty, setDifficulty] = useState<number>(0)
+        //Função que vamos configurar
+        const addTaskHandler = () => {
+            //code...
+        }
+    }
+    ```
+    * Com nossas props criadas, vamos começar a confugurar a função, primeiro adicionaremos um aparametro `event` e linkaremos ele quando houver um evento de *formulário*, já que anteriormente já linkamos a tag *form* com essa função.
+    ```ts
+        const addTaskHandler = (event: FormEvent<HTMLFormElement>) => {
+        }
+    ```
+    Agora com o parâmetro definido, vamos chamar o evento do parâmetro e atribuir a ele o metódo `preventDefault();`, com isso vamos impedir o comprtamento padrão do formulário, ou seja, vamos impedir que a tela seja recarregada quando clicarmos no *submit*.
+    ```ts
+        const addTaskHandler = (event: FormEvent<HTMLFormElement>) => {
+            event.preventDefault()
+        }
+    ```
+    Aproveitaremos para criar uma variável para guardamos o id, esse id vai ser gerado aleatóriamente por meio da *classe `Math`*
+    ```ts
+        const addTaskHandler = (event: FormEvent<HTMLFormElement>) => {
+            event.preventDefault()
+            const id = Math.floor(Math.random() * 1000)
+        }
+    ```
+    Agora com o Id já gerado e os dados dos inputs já sendo guardado no *useState* pela função `handleChange()` que criamos anteriormente, vamos criar um *objeto* para guardamos a informção no input atual e salvar esse objeto na nossa lista.
+    Para fazer isso o objeto criado vai ser colocado na props `setTaskList` que criamos anteriormente e ela vai receber o parametro que é um `useState` para setar itens na nossa lista no arquivo `App.tsx`. Depois disso vamos resetar os valores do nosso `useState` do *titulo* e *dificuldade*, para que assim, o usuário possa escrever novamente.
+    ```ts
+    const addTaskHandler = (event: FormEvent<HTMLFormElement>) => {
+
+        event.preventDefault();
+
+        const id = Math.floor(Math.random() * 1000) //Gerando id
+
+        const newTask: ITask = {id, title, difficulty} //Criando objeto com as informações
+
+        setTaskList!([...taskList, newTask]) // Juntando lista atual com o objeto criado
+
+        setTitle("") //Resetando valores do nossos inputs
+        setDifficulty(0)
+
+        console.log(taskList)
+    }
+    ```
+    Com a função pronta, basta ir no componente em si o HTML e setar os valores dos inputs para o atual do `useState`
+    ```js
+    import React,{useState, ChangeEvent, FormEvent, useEffect} from 'react'
+    //CSS
+    import styles from "./TaskForm.module.css"
+    //Interfaces
+    import { ITask } from "../interfaces/Task";
+
+    type Props = {
+        btnText:string
+        taskList: ITask[];
+        setTaskList?: React.Dispatch<React.SetStateAction<ITask[]>>
+    }
+
+    const TaskForm = ({btnText, taskList, setTaskList}: Props) => {
+
+        const [id, setId] = useState<number>(0)
+        const [title, setTitle] = useState<string>('')
+        const [difficulty, setDifficulty] = useState<number>(0)
+
+        const addTaskHandler = (event: FormEvent<HTMLFormElement>) => {
+
+            event.preventDefault();
+
+            const id = Math.floor(Math.random() * 1000)
+
+            const newTask: ITask = {id, title, difficulty}
+
+            setTaskList!([...taskList, newTask])
+
+            setTitle("")
+            setDifficulty(0)
+
+            console.log(taskList)
+        }
+
+        const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+            if(event.target.name === 'title'){
+                setTitle(event.target.value)
+            }else{
+            setDifficulty(parseInt(event.target.value)) 
+            }
+        }
+        return (
+            <form onSubmit={addTaskHandler} className={styles.form}>
+                <div className={styles.conteiner}>
+                    <label htmlFor="title">Título:</label>
+                    <input 
+                    type="text"
+                    name="title" 
+                    placeholder='Título da tarefa' 
+                    onChange={handleChange}
+                    value={title}/>
+                </div>
+                <div className={styles.conteiner}>
+                    <label htmlFor="difficulty">Dificudade:</label>
+                    <input
+                    type="text"
+                    name="difficulty"
+                    placeholder='Dificuldade da tarefa'
+                    onChange={handleChange}
+                    value={difficulty}/>
+                </div>
+                <input type="submit" value={btnText} />
+            </form>
+        )
+    }
+
+    export default TaskForm
+    ```
+    Com toda a configuração dessa parte pronta, vamos ir para o `App.tsx` e setar nossas props.
+    ```js
+    import React, {useState}from "react";
+    //Components
+    import Header from "./components/Header";
+    import Footer from "./components/Footer";
+    import TaskForm from "./components/TaskForm";
+    import TaskList from "./components/TaskList";
+    // CSS
+    import styles from "./App.module.css"
+
+    //Interface
+    import { ITask } from "./interfaces/Task";
+
+    function App() {
+
+    const [taskList, setTaskList] = useState<ITask[]>([])
+
+    return (
+        <div>
+        <Header/>
+        <main className={styles.main}>
+            <div>
+            <h2>O que você vai fazer?</h2>
+            //Setando props
+            <TaskForm btnText="Criar Tarefa" taskList={taskList} setTaskList={setTaskList}/>
+            </div>
+            <div>
+            <h2>Suas Tarefas:</h2>
+            <TaskList/>
+            </div>
+        </main>
+        <Footer/>
+        </div>
+    );
+    }
+
+    export default App;
+    ```
+    
