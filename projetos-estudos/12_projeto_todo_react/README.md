@@ -7,11 +7,11 @@ Criaremos dentro da página **_src_** uma pasta chamada de *components* que irá
     * Dentro do `Global.d.ts` vamos configurar para ele aceitar arquivos css como modulos de exportação, assim criaremos arquivos css com escopo para nossos componentes
         * Exemplo de nome para arquivo CSS `Header.module.css` (O .module.css é para o TypeScript identificar esses arquivos como modulos)
         * Configuração Global do TypeScript
-        ```
+        ```ts
         declare module "*.module.css"
         ```
     * Quando formos adicionar uma **Classe ou ID** em uma tag do HTML utilizando o React, vamos chamar o modulo CSS e atribuir a classe ou id para ela.
-    ```
+    ```js
     import React from 'react'
     import styles from "./Header.module.css"
 
@@ -41,7 +41,7 @@ Depois de criar a interface, vamos importar para nossos componentes *App.tsx* e 
         * `import React,{useState, ChangeEvent, FormEvent, useEffect} from 'react'`
 
 **Configurando formulário**
-```
+```js
 import React,{useState, ChangeEvent, FormEvent, useEffect} from 'react'
 //CSS
 import styles from "./TaskForm.module.css"
@@ -98,7 +98,7 @@ export default TaskForm
     * `const [taskList, setTaskList] = useState<ITask[]>([])`
 
 * Agora voltaremos no arquivo *TaskForm* e criaremos uma props com no nome de taskList e atribuiremos essa props no componente.
-```
+```js
 import { ITask } from "../interfaces/Task";
 
 type Props = {
@@ -113,7 +113,7 @@ const TaskForm = ({btnText, taskList}: Props) => {
 
 * Depois que fizermos isso, vamos voltar para o arquivo *App.tsx* e vamos adicionar o parâmetro da props quando chamamos o componente e atribuiremos a ela a nossa `useState` criada anteriormente, `taskList`. 
 Então o código fica dessa forma>
-```
+```js
 import React, {useState}from "react";
 
 //Components
@@ -130,7 +130,8 @@ import { ITask } from "./interfaces/Task";
 
 function App() {
 
-  {c:red}const [taskList, setTaskList] = useState<ITask[]>([]){/c}
+//UseState
+  const [taskList, setTaskList] = useState<ITask[]>([])
 
   return (
     <div>
