@@ -37,8 +37,8 @@ export interface ITask{
 }
 ```
 Depois de criar a interface, vamos importar para nossos componentes *App.tsx* e *TaskForm.tsx*.
-    * Dentro do componente onde está nosso formulário, vamos importar algumas funções do próprio React, sendo elas: `useState, ChangeEvent, FormEvent, useEffect`
-        * `import React,{useState, ChangeEvent, FormEvent, useEffect} from 'react'`
+* Dentro do componente onde está nosso formulário, vamos importar algumas funções do próprio React, sendo elas: `useState, ChangeEvent, FormEvent, useEffect`
+    * `import React,{useState, ChangeEvent, FormEvent, useEffect} from 'react'`
 
 **Configurando formulário**
 ```js
