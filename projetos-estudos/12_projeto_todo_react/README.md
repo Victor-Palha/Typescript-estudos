@@ -903,4 +903,70 @@ export default TaskList
         }, [task])
       ```
   * Pronto, agora quando clicar no icone do Bootstrap, as informações daquela tarefa vão vim junto com o modal para edição!
-  
+***
+**Finalizando projeto, update das tarefas!**
+***
+
+* Estamos finalmente finalizando o projeto do React, se você chegou até aqui eu fico muito feliz! Mas sem enrolação, vamos aprender como fazer o Update das nossas tarefas. 
+  * Nesse modulo, vamos trabalhar com apenas 2 arquivos, sendo eles o `App.tsx` e o `TaskForm.tsx`.
+* Primeiramente vamos no arquivo `TaskForm` e criaremos uma nova *props* opcional, essa props vai guardar uma função que vai ser passada como parametro para o nosso componente Modal, então como vocês já devem saber, precisamos passar para o componente em si a props criada.
+  * ```ts
+      type Props = {
+        btnText:string
+        taskList: ITask[];
+        setTaskList?: React.Dispatch<React.SetStateAction<ITask[]>>
+        task?: ITask | null
+        //Nova props
+        handleUpdate?(id:number, title:string, difficulty:number):void
+      }
+      // Adicionar a props no componente.
+      const TaskForm = ({btnText, taskList, setTaskList, task, handleUpdate}: Props) => {
+        //code...
+      }
+      ```
+  * Por enquanto é o que fazermos apenas no nesse arquivo, vamos para o `App.tsx` agora.
+* No componente princípal, vamos apenas criar a função para atualizar o item editado com as informações que vão ser passadas no input, no caso `id, title, difficulty`. Vamos chamar essa função de `updateTask`, esse update vai receber os dados e criar um objeto e então vamos utilizar a função `map` para vasculhar todas as tarefas existente e ver qual que tem o `id` igual, então atualizaremos. Por fim vamos adicionar essa função como uma props do componente modal.
+   * ```ts
+        const updateTask = (id:number, title:string, difficulty:number)=>{
+        const updatedTask:ITask = {id, title, difficulty} 
+
+        const updatedItens = taskList.map((task)=>{
+          return task.id === updatedTask.id ? updatedTask : task
+        })
+
+        setTaskList(updatedItens)
+
+        hideOrShowModal(false)
+      }
+        return (
+        <div>
+          <Modal children={<TaskForm btnText="Editar Tarefa" 
+          taskList={taskList} 
+          task={taskToUpdate} 
+          //Nova props
+          handleUpdate={updateTask}/>}/>
+          //code...
+        </div>
+        )
+      ```
+* Agora o projeto está a um passo de estar pronto, precisamos agora voltar para o arquivo `TaskForm` e chamar a props devidamente e colocaremos ela dentro da função `addTaskHandler` e validaremos se ela vai ser chamada ou não.
+  * ```ts
+        const addTaskHandler = (event: FormEvent<HTMLFormElement>) => {
+
+        event.preventDefault();
+        if(handleUpdate){
+            handleUpdate(id, title, difficulty)
+        }else{
+          const id = Math.floor(Math.random() * 1000)
+          const newTask: ITask = {id, title, difficulty}
+          setTaskList!([...taskList, newTask])
+      
+          setTitle("")
+          setDifficulty(0)
+      
+          console.log(taskList)
+            }
+          }
+    ```
+***
+Agora o projeto está 100% pronto e funcional, espero que você tenha aprendido alguma coisa até esse ponto, esse é o primeiro projeto que eu escrevo sobre e imagino que tenha algumas falhas na didatíca... Mas trabalharei para melhorar mais ainda. :)
