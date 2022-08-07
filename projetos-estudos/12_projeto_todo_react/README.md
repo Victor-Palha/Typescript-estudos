@@ -804,3 +804,103 @@ const TaskList = ({taskList, handleDelete, handleEdit}: Props) => {
 
 export default TaskList
 ```
+
+***
+**Preenchendo Modal com dados**
+***
+
+* Para preenchermos os dados no nosso modal para quando formos editar, é uma série de passos bem simples.
+  * Primeiro no nosso `App.tsx` vamos criar um useState para guardarmos o dado que vai ser alterado, ele vai ser tipado com nossa interface ou como nulo, então ele vai começar como Nulo.
+  `const [taskToUpdate, setTaskToUpdate] = useState<ITask | null>(null)`
+  * Depois de criar o useState, vamos até nossa função `editTask` e vamos colocar um parametro nela chamado de `task` e tipar ele como ITask.
+  * Com o parametro criado, vamos chamar o useState que criamos anteriormente e passar o parametro dele sendo uma `task`.
+    * Se você está se perguntando de onde vai vim esse dado que está entrando na função, isso já já vai ser respondido
+    * O resultado da função é:
+    ```ts
+    const editTask = (task:ITask):void =>{
+      hideOrShowModal(true)
+      setTaskToUpdate(task)
+    }
+    ```
+    * A última coisa que devemos fazer é adicionar uma nova props no componente `Modal`, chamado de *task* e essa props vai receber a useState `tasklist`. O resultado é:
+    * `<Modal children={<TaskForm btnText="Editar Tarefa" taskList={taskList} task={taskToUpdate}/>}/>`
+    * Isso vai ser explicado mais adiante na sessão.
+
+* Com a função criada, vamos partir para o arquivo `taskList.tsx`.
+  * Agora que criamos um parametro para a função editTask, ela serve como uma props que está sendo enviada do arquivo `App.tsx` para o atual, então como ela recebeu um parametro, devemos passar ele aqui e tipar ele com nossa interface.
+    * ```ts
+      type Props = {
+        taskList: ITask[]
+        handleDelete(id:number):void
+        handleEdit(task: ITask):void
+      }
+      ```
+  * No arquivo, temos um `map` que está buscando todas as tarefas registradas no nosso array, vamos utilizar essa informação para adicionar o parametro da função que criamos anteriormente que estava apenas abrindo e fechando o *Modal*. No caso o nosso `item`.
+    * `<i className='bi bi-pencil' onClick={()=>handleEdit(item)}></i>`
+  * O código todo fica dessa forma:
+  ```ts
+  import React from 'react'
+  //Inteface
+  import {ITask} from '../interfaces/Task'
+  //Css
+  import styles from './TaskList.module.css'
+
+  type Props = {
+    taskList: ITask[]
+    handleDelete(id:number):void
+    handleEdit(task: ITask):void
+  }
+
+  const TaskList = ({taskList, handleDelete, handleEdit}: Props) => {
+    return (
+      <>
+        {taskList.length > 0 ? (
+          taskList.map((item)=>(
+            <div key={item.id} className={styles.task}>
+              <div className={styles.details}>
+                <h4>{item.title}</h4>
+                <p>Dificuldade: {item.difficulty}</p>
+              </div>
+              <div className={styles.actions}>
+                <i className='bi bi-pencil' onClick={()=>handleEdit(item)}></i>
+                <i className='bi bi-trash' onClick={()=> {
+                  handleDelete(item.id)}
+                  }></i>
+              </div>
+            </div>
+          ))
+        ): (
+          <p>Não há tarefas cadastradas</p>
+        )}
+      </>
+    )
+  }
+
+  export default TaskList
+  ```
+
+* Agora vamos passar para o ultimo arquivo que vamos alterar nessa sessão, `TaskForm.tsx`.
+  * Lembra que criamos uma props dentro do componente `Modal`, para falar a verdade foi dentro do componente `TaskForm` que por um acaso é uma props dentro do componente `Modal`, confuso né? mas acho que vocês pegaram a ideia... Mas só para garantir, foi no arquivo `App.tsx` nós fizemos essa alteração aqui:
+    * `<Modal children={<TaskForm btnText="Editar Tarefa" taskList={taskList} task={taskToUpdate}/>}/>`
+  * Bom, com isso relembrado podemos partir para o arquivo `TaskForm`. Dentro dele precisamos criar uma nova *props* que vai ser opcional, isso porquê estamos chamando essa props e passando a informação que vai ser alterada, entretanto, quando chamamos ela no componente principal, ela não tem necessidade de ser chamada, então o código fica assim:
+   * ```ts
+      type Props = {
+        btnText:string
+        taskList: ITask[];
+        setTaskList?: React.Dispatch<React.SetStateAction<ITask[]>>
+        task?: ITask | null
+      }
+      ```
+  * Vamos nesse momento utilizar uma funcionalidade que ainda não utilizamos nesse projeto, que é o `useEffect`. Esse Hook, você diz ao React que o componente precisa fazer algo apenas depois da renderização. O React ira se lembrar da função que você passou (nos referiremos a ele como nosso “efeito”), e chamá-la depois que realizar as atualizações do DOM. Nesse efeito, atulizamos os valores do modal, mas podemos também realizar busca de dados ou chamar alguma API imperativa.
+  * Depois dessa breve explicação sobre o `useEffect`, vamos utilizar ele para setar os valores no nosso input para quando formos alterá-lo, o código fica desse jeito:
+    * ```ts
+        useEffect(()=>{
+          if(task){
+              setId(task.id)
+              setTitle(task.title)
+              setDifficulty(task.difficulty)
+          }
+        }, [task])
+      ```
+  * Pronto, agora quando clicar no icone do Bootstrap, as informações daquela tarefa vão vim junto com o modal para edição!
+  
